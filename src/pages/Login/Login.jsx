@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { SingIn } from '../../redux/actions/auth/user_action'
+import { connect } from 'react-redux'
 
 function Copyright() {
   return (
@@ -115,5 +117,10 @@ function Login() {
     </Container>
   );
 }
+const mapDispatchToProps = { 
+  SingIn 
+};
 
-export default Login;
+export default connect(
+  mapDispatchToProps
+)(Login);
