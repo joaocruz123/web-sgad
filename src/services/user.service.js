@@ -1,4 +1,5 @@
 //import config from 'config';
+import axios from 'axios';
 import { authHeader } from './../_helpers/auth_header';
 
 export const userService = {
@@ -7,25 +8,19 @@ export const userService = {
     getAll
 };
 
-function login(email, password) {
+async function login(email, password) {
     const requestOptions = {
-        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-            email: email, 
-            password: password,
-            remember_me: true 
-        })
     };
+    const body = JSON.stringify({ 
+        email: email, 
+        password: password,
+        remember_me: true 
+    });
 
-    return fetch(`http://localhost/api/login`, requestOptions)
-        .then(handleResponse)
-        .then(user => {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('user', JSON.stringify(user));
-
-            return user;
-        });
+    const resp = await axios.post(`http://localhost/api/login`,  body, requestOptions)
+    
+    return resp.data
 }
 
 function logout() {
