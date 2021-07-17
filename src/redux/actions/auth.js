@@ -1,7 +1,7 @@
-import { userConstants } from './../../../_constants/user.constants';
-import { userService } from './../../../services/user.service';
+import { userConstants } from './../../_constants/user.constants';
+import { userService } from './../../services/user.service';
 import { alertActions } from './alert.actions';
-import { history } from './../../../_helpers/history';
+import { history } from './../../_helpers/history';
 
 // export const userActions = {
 //     login,
@@ -9,7 +9,10 @@ import { history } from './../../../_helpers/history';
 //     getAll
 // };
 
-export const SingIn = (email, password) => {
+export const SingIn = (props) => {
+    const { email, password} = props    
+    console.log(email)
+
     return dispatch => {
         dispatch(request({ email }));
 
@@ -17,7 +20,7 @@ export const SingIn = (email, password) => {
             .then(
                 user => {
                     dispatch(success(user));
-                    history.push('/');
+                    history.push('/app');
                 },
                 error => {
                     dispatch(failure(error));
