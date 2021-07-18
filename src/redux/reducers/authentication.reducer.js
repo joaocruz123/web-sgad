@@ -5,7 +5,7 @@ const initialState = user ? {
     loggedIn: true, 
     user,
     loading: false
-} : { loading : false};
+} : { loading : false, user: {}};
 
 export const authentication = (state = initialState, action) => {
     switch (action.type) {

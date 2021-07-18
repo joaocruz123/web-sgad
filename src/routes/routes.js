@@ -1,9 +1,11 @@
 import React from "react";
-import { Router , Route, Switch, Redirect } from "react-router-dom";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
 import Login from "../pages/Login/Login";
-import  history  from '../history';
-
+import Home from "./../pages/Home";
+import history from '../history';
 import { isAuthenticated } from "../services/auth";
+import { Provider } from "react-redux";
+import { store } from "../redux/store";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
@@ -19,14 +21,16 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 );
 
 const Routes = () => (
-    <Router  history={history}>
-        <Switch>
-            <Route exact path="/" component={Login} />
-            <Route path="/signup" component={() => <h1>SignUp</h1>} />
-            <PrivateRoute path="/app" component={() => <h1>App</h1>} />
-            <Route path="*" component={() => <h1>Page not found</h1>} />
-        </Switch>
-    </Router >
+    <Provider store={store}>
+        <Router history={history}>
+            <Switch>
+                <Route exact path="/" component={Login} />
+                <Route path="/signup" component={() => <h1>SignUp</h1>} />
+                <PrivateRoute path="/app" component={Home} />
+                <Route path="*" component={() => <h1>Page not found</h1>} />
+            </Switch>
+        </Router >
+    </Provider>
 );
 
 export default Routes;

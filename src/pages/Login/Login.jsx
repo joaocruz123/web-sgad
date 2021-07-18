@@ -12,10 +12,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
 import { SingIn } from '../../redux/actions/auth'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom';
-import history from '../../history';
 
 function Copyright() {
   return (
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Login(props) {
+function Login() {
   const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -135,16 +135,12 @@ function Login(props) {
 }
 
 const mapStateToProps = (state) => {
-  const { authentication } = state;
-  const { user, loading } = authentication;
-  return { user, loading };
+  return {
+    loading: state.authentication.loading
+  };
 }
 
-const mapDispatchToProps = {
-  SingIn,
-};
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(Login));
+  mapStateToProps, {
+  SingIn
+})(Login);
