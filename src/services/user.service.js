@@ -12,15 +12,19 @@ async function login(email, password) {
     const requestOptions = {
         headers: { 'Content-Type': 'application/json' },
     };
-    const body = JSON.stringify({ 
-        email: email, 
+    const body = JSON.stringify({
+        email: email,
         password: password,
-        remember_me: true 
+        remember_me: true
     });
 
-    const resp = await axios.post(`http://localhost/api/login`,  body, requestOptions)
-    
-    return resp.data
+    await axios.post(`http://localhost/api/login`, body, requestOptions)
+        .then(
+            response => {
+                localStorage.setItem('user', JSON.stringify(response.data.result));
+                return response.data
+            }
+        )
 }
 
 function logout() {

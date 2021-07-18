@@ -4,9 +4,11 @@ import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
 import { store } from './_helpers/store';
+import LoadingComponent from './components/Loading/LoadingComponent';
 
 ReactDOM.render(
   <Provider store={store}>
+    <LoadingComponent></LoadingComponent>
     <App></App>
   </Provider>,
   document.getElementById('root')
