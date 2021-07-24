@@ -5,10 +5,12 @@ import history from '../../history';
 
 export const SingIn = ({ email, password }) => async (dispatch) => {
     try {
+        dispatch(setLoading(true));
         userService.login(email, password)
             .then(
                 user => {
                     dispatch(setUser(user));
+                    dispatch(setLoading(false));
                     history.push('/app');
                 },
                 error => {
@@ -20,28 +22,35 @@ export const SingIn = ({ email, password }) => async (dispatch) => {
     }
 }
 
-function logout() {
+export const Logout = () => async (dispatch) => {
+    try {
+        dispatch(setLoading(true));
+        userService.logout()
+            .then(
+                logout => {
+                    dispatch(setUser());
+                    history.push('/');
+                }
+            );
+    } catch (e) {
+        console.log(e)
+    }
     userService.logout();
     return { type: userConstants.LOGOUT };
 }
 
-function getAll() {
-    return dispatch => {
-        dispatch(request());
+export const setLoading = (loading) => async (dispatch) => {
+    dispatch({
+        type: userConstants.SET_LOADING,
+        payload: loading
+    })
+}
 
-        userService.getAll()
-            .then(
-                users => dispatch(success(users)),
-                error => {
-                    dispatch(failure(error));
-                    dispatch(alertActions.error(error))
-                }
-            );
-    };
-
-    function request() { return { type: userConstants.GETALL_REQUEST } }
-    function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
-    function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+export const setLogout = () => async (dispatch) => {
+    dispatch({
+        type: userConstants.LOGOUT,
+        payload: ''
+    })
 }
 
 export const setUser = (user) => async (dispatch, getState, api) => {

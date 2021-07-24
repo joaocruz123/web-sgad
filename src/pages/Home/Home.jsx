@@ -1,15 +1,14 @@
-import { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-function Home(props){
-	const {user} = props
-	const [value, setValue] = useState(null);
-	
+function Home(props) {
+	const { user } = props
+
 	useEffect(() => {
-	
+
 	}, []);
-	
+
 	return (
 		<>
 			<h1>Home</h1>
@@ -19,12 +18,12 @@ function Home(props){
 }
 
 const mapStateToProps = (state) => {
-	const { authentication } = state;
-	const { user, loading } = authentication;
-	return { user, loading };
-  }
+	return {
+		user: state.authentication.user
+	};
+}
 
 
-  export default connect(
+export default connect(
 	mapStateToProps
-  )(withRouter(Home));
+)(withRouter(Home));

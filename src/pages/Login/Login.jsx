@@ -15,7 +15,7 @@ import Container from '@material-ui/core/Container';
 
 import { SingIn } from '../../redux/actions/auth'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom';
+import LoadingComponent from '../../components/Loading/LoadingComponent';
 
 function Copyright() {
   return (
@@ -68,6 +68,7 @@ function Login(props) {
     <>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        <LoadingComponent></LoadingComponent>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -101,7 +102,7 @@ function Login(props) {
               onChange={e => setPassword(e.target.value)}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" value={remember} />}
+              control={<Checkbox color="primary" value={remember} />}
               label="Remember me"
             />
             <Button

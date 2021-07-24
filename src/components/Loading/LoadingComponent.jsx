@@ -1,41 +1,27 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-top-loading-bar'
 
 
 function LoadingComponent(props) {
     const { loading } = props
-    const [progress, setProgress] = useState(0)
+    const ref = useRef(null)
 
     useEffect(() => {
         if (loading) {
-            const timer = setInterval(() => {
-                setProgress((oldProgress) => {
-                    if (oldProgress === 100) {
-                        return 0;
-                    }
-                    const diff = Math.random() * 10;
-                    return Math.min(oldProgress + diff, 100);
-                });
-            }, 800);
-
-            return () => {
-                clearInterval(timer);
-            };
-        }else{
-            setProgress(0)
+            ref.current.continuousStart()
         }
-    }, []);
+    }, [loading]);
 
     return (
-        <><LoadingBar color="#f11946" progress={progress} onLoaderFinished={() => setProgress(0)} /><br /></>
+        <><LoadingBar color='#f11946' ref={ref} /><br /></>
     )
 }
 
 const mapStateToProps = (state) => {
-    const { authentication } = state;
-    const { loading } = authentication;
-    return { loading };
+    return {
+        loading: state.authentication.loading
+    };
 }
 
 export default connect(
