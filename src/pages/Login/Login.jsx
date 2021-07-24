@@ -50,7 +50,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Login() {
+function Login(props) {
+  const { SingIn }  = props;
   const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

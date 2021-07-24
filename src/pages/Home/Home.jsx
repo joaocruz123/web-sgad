@@ -13,7 +13,7 @@ function Home(props){
 	return (
 		<>
 			<h1>Home</h1>
-			{user.user_name}
+			{user && user.user_name}
 		</>
 	);
 }

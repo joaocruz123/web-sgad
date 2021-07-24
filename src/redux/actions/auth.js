@@ -3,20 +3,21 @@ import { userService } from './../../services/user.service';
 import { alertActions } from './alert.actions';
 import history from '../../history';
 
-export const SingIn = ({ email, password }) => {
-    userService.login(email, password)
-        .then(
-            user => {
-                success(user);
-                history.push('/app');
-            },
-            error => {
-                failure(error);
-            }
-        );
-
-    function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
-    function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+export const SingIn = ({ email, password }) => async (dispatch) => {
+    try {
+        userService.login(email, password)
+            .then(
+                user => {
+                    dispatch(setUser(user));
+                    history.push('/app');
+                },
+                error => {
+                    dispatch(setUserError(error));
+                }
+            );
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 function logout() {
@@ -41,4 +42,18 @@ function getAll() {
     function request() { return { type: userConstants.GETALL_REQUEST } }
     function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
     function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+}
+
+export const setUser = (user) => async (dispatch, getState, api) => {
+    dispatch({
+        type: userConstants.LOGIN_SUCCESS,
+        payload: user
+    })
+}
+
+export const setUserError = (error) => async (dispatch, getState, api) => {
+    dispatch({
+        type: userConstants.LOGIN_FAILURE,
+        payload: error
+    })
 }
