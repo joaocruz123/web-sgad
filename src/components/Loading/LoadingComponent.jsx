@@ -1,20 +1,33 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import LoadingBar from 'react-top-loading-bar'
+import { makeStyles } from '@material-ui/core/styles'
+import ReactLoading from 'react-loading'
 
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyItems: 'center',
+        justifyContent: 'center',
+        width: '100%'
+    },
+}));
 
 function LoadingComponent(props) {
     const { loading } = props
-    const ref = useRef(null)
+    const classes = useStyles();
 
     useEffect(() => {
-        if (loading) {
-            ref.current.continuousStart()
-        }
-    }, [loading]);
+    }, []);
 
     return (
-        <><LoadingBar color='#f11946' ref={ref} /><br /></>
+        <>
+            {loading && <div className={classes.paper} style={{ backgroundColor: '#f2844e', height: '100vh' }} >
+                <ReactLoading type={"bars"} color={"#ffffff"} height={'5%'} width={'5%'} />
+            </div>
+            }
+        </>
     )
 }
 

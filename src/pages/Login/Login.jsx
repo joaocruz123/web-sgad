@@ -12,7 +12,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
 import { SingIn } from '../../redux/actions/auth'
 import { connect } from 'react-redux'
 import LoadingComponent from '../../components/Loading/LoadingComponent';
@@ -36,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    justifyItems: 'center',
+    justifyContent: 'center'
   },
   avatar: {
     margin: theme.spacing(1),
@@ -51,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Login(props) {
-  const { SingIn }  = props;
+  const { SingIn, loading } = props;
   const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -65,10 +66,10 @@ function Login(props) {
   }
 
   return (
-    <>
+    <>        
+      {loading ? <LoadingComponent></LoadingComponent> :
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <LoadingComponent></LoadingComponent>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -131,7 +132,7 @@ function Login(props) {
         <Box mt={8}>
           <Copyright />
         </Box>
-      </Container>
+      </Container>}
     </>
   );
 }
