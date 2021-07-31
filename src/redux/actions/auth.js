@@ -22,21 +22,20 @@ export const SingIn = ({ email, password }) => async (dispatch) => {
     }
 }
 
-export const Logout = () => async (dispatch) => {
+export const SingOut = () => async (dispatch) => {
     try {
         dispatch(setLoading(true));
         userService.logout()
             .then(
                 logout => {
                     dispatch(setUser());
+                    dispatch(setLoading(false));
                     history.push('/');
                 }
             );
     } catch (e) {
         console.log(e)
     }
-    userService.logout();
-    return { type: userConstants.LOGOUT };
 }
 
 export const setLoading = (loading) => async (dispatch) => {
